@@ -11,7 +11,7 @@ class Category extends Model
 
     public function users()
     {
-        return $this->belongsToMany('App\User')->as('subscriptions')->withTimestamps();
+        return $this->belongsToMany('App\Models\User')->as('subscriptions')->withTimestamps();
     }
 
 }

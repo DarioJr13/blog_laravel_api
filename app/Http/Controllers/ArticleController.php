@@ -35,7 +35,8 @@ class ArticleController extends Controller
 
          $validator = Validator::make($request->all(), [
             'title' => 'required|string|unique:articles|max:255',
-             'body' => 'required|string'
+             'body' => 'required|string',
+             'category_id' => 'required|exists:categories,id'
      ]);
      if ($validator->fails()) {
          return response()->json([
@@ -49,6 +50,12 @@ class ArticleController extends Controller
     }
     public function update(Request $request, Article $article)
     {
+        $request->validate([
+            'title' => 'required|string|unique:articles,title,'.$article->id.'|max:255',
+            'body' => 'required',
+            'category_id' => 'required|exists:categories,id'
+        ]);
+
         $article->update($request->all());
         return response()->json($article, 200);
     }
